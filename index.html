@@ -1,0 +1,96 @@
+<!doctype html>
+<!--
+  Copyright 2024 Google LLC
+  SPDX-License-Identifier: Apache-2.0
+-->
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+
+  <!-- Summarizer API --->
+  <meta http-equiv="origin-trial"
+    content="Aiqz8ZArzAhQ2U24U9mLLJV8l16YNGsuiDqHJcUD3eCqYDbrWpb8qG3BSMXJ4OxDyS6Zw9HlsS5/ZoD0AFDAUQEAAABWeyJvcmlnaW4iOiJodHRwczovL2Nocm9tZS5kZXY6NDQzIiwiZmVhdHVyZSI6IkFJU3VtbWFyaXphdGlvbkFQSSIsImV4cGlyeSI6MTc1MzE0MjQwMH0=" />
+
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script type="module" src="./src/main.ts"></script>
+  <title>Summarization API Playgroud</title>
+</head>
+
+<body>
+  <header>
+    <h1>Summarization API Playground</h1>
+  </header>
+  <main>
+    <fieldset>
+      <legend>Settings</legend>
+      <div>
+        <label for="type">Summary Type:</label>
+        <select id="type">
+          <option value="key-points" selected>Key Points</option>
+          <option value="tl;dr">TL;DR</option>
+          <option value="teaser">Teaser</option>
+          <option value="headline">Headline</option>
+        </select>
+      </div>
+      <div>
+        <label for="length">Length:</label>
+        <select id="length">
+          <option value="short" selected>Short</option>
+          <option value="medium">Medium</option>
+          <option value="long">Long</option>
+        </select>
+      </div>
+      <div>
+        <label for="format">Format:</label>
+        <select id="format">
+          <option value="markdown" selected>Markdown</option>
+          <option value="plain-text">Plain text</option>
+        </select>
+      </div>
+    </fieldset>
+    <fieldset>
+      <legend>Prompt</legend>
+      <textarea id="input">
+    Johannes Gutenberg (1398 – 1468) was a German goldsmith and publisher who introduced printing to Europe. His
+    introduction of mechanical movable type printing to Europe started the Printing Revolution and is widely regarded as the
+    most important event of the modern period. It played a key role in the scientific revolution and laid the basis for the
+    modern knowledge-based economy and the spread of learning to the masses.
+    
+    Gutenberg many contributions to printing are: the invention of a process for mass-producing movable type, the use of
+    oil-based ink for printing books, adjustable molds, and the use of a wooden printing press. His truly epochal invention
+    was the combination of these elements into a practical system that allowed the mass production of printed books and was
+    economically viable for printers and readers alike.
+    
+    In Renaissance Europe, the arrival of mechanical movable type printing introduced the era of mass communication which
+    permanently altered the structure of society. The relatively unrestricted circulation of information—including
+    revolutionary ideas—transcended borders, and captured the masses in the Reformation. The sharp increase in literacy
+    broke the monopoly of the literate elite on education and learning and bolstered the emerging middle class.
+          </textarea>
+      <div>Character Count: <span id="character-count">0</span><span id="character-count-exceed" class="hidden"> (may
+          exceed maximum token limit supported by the API.)</span></div>
+      <button id="summarize">Summarize</button>
+    </fieldset>
+    <div>
+      <h2>Summary</h2>
+      <pre id="output"></pre>
+    </div>
+  </main>
+  <footer>
+    Be the first to test new AI APIs. Your feedback is invaluable to our development process. Join our <a
+      href=" https://developer.chrome.com/docs/ai/built-in#get_an_early_preview">Early Preview Program</a> today.
+  </footer>
+  <div class="dialog" id="summarization-unavailable">
+    <div>Your browser doesn't support the Summarization API. If you're on Chrome, join the <a
+        href=" https://developer.chrome.com/docs/ai/built-in#get_an_early_preview">Early Preview Program</a> and enable
+      it.</div>
+  </div>
+  <div class="dialog" id="summarization-unsupported">
+    <div>The Summarization API is available, but your device is unable to run it. Check device requirements in the <a
+        href=" https://developer.chrome.com/docs/ai/built-in#get_an_early_preview">Early Preview Program</a>
+      documentation.</div>
+  </div>
+</body>
+
+</html>
