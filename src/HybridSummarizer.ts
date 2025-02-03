@@ -8,6 +8,7 @@ class HybridSummarizer extends EventTarget implements AISummarizer {
 
     private geminiSummarizer: AISummarizer;
     private builtinSummarizer?: AISummarizer;
+    private summarizer: AISummarizer;
 
     constructor(options: AISummarizerCreateOptions = {}, geminiSummarizer: AISummarizer, builtinSummarizer?: AISummarizer) {
         super();
@@ -17,27 +18,19 @@ class HybridSummarizer extends EventTarget implements AISummarizer {
         this.length = options.length || 'medium';
         this.geminiSummarizer = geminiSummarizer;
         this.builtinSummarizer = builtinSummarizer;
+        this.summarizer = builtinSummarizer || geminiSummarizer;
     }
 
-    async summarize(input: string, options?: AISummarizerSummarizeOptions): Promise<string> {
-        if (this.builtinSummarizer) {
-            return this.builtinSummarizer.summarize(input, options);
-        }
-        return this.geminiSummarizer.summarize(input, options);
+    summarize(input: string, options?: AISummarizerSummarizeOptions): Promise<string> {
+        return this.summarizer.summarize(input, options);
     }
 
     summarizeStreaming(input: string, options?: AISummarizerSummarizeOptions): ReadableStream<string> {
-        if (this.builtinSummarizer) {
-            return this.builtinSummarizer.summarizeStreaming(input, options);
-        }
-        return this.geminiSummarizer.summarizeStreaming(input, options);
+        return this.summarizer.summarizeStreaming(input, options);
     }
 
     destroy(): void {
-        if (this.builtinSummarizer) {
-            this.builtinSummarizer.destroy();
-        }
-
+        this.builtinSummarizer?.destroy();
         this.geminiSummarizer.destroy();
     }
 }
