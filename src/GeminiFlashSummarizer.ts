@@ -114,6 +114,7 @@ class GeminiSummarizer extends EventTarget implements AISummarizer {
     }
 
     async summarize(input: string, options?: AISummarizerSummarizeOptions): Promise<string> {
+        console.debug('Summarizing with Gemini Flash');
         const systemPrompt = this.buildSummarizationPrompt(input);
         const request: GenerateContentRequest = {
             contents: [{
@@ -122,12 +123,12 @@ class GeminiSummarizer extends EventTarget implements AISummarizer {
             }],
             systemInstruction: systemPrompt
         };
-        const response = await this.generativeModel.generateContent(request, { signal: options?.signal });
-        return response.response.text()
+        const result = await this.generativeModel.generateContent(request, { signal: options?.signal });
+        return result.response.text();
     }
 
     summarizeStreaming(input: string, options?: AISummarizerSummarizeOptions): ReadableStream {
-        console.log('Summarizing with Gemini Flash');
+        console.debug('Summarizing with Gemini Flash');
         const systemPrompt = this.buildSummarizationPrompt(input);
         const request: GenerateContentRequest = {
             contents: [{
@@ -139,8 +140,8 @@ class GeminiSummarizer extends EventTarget implements AISummarizer {
         const stream = new ReadableStream({
             start: async (controller) => {
                 try {
-                    const response = await this.generativeModel.generateContentStream(request, { signal: options?.signal });
-                    for await (const chunk of response.stream) {
+                    const result = await this.generativeModel.generateContentStream(request, { signal: options?.signal });
+                    for await (const chunk of result.stream) {
                         controller.enqueue(chunk.text());
                     }
                     controller.close();
